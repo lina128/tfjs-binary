@@ -1,10 +1,19 @@
 const tf = require('@tensorflow/tfjs');
 
 async function main() {
-    // How to decide loadGraphModel or loadLayersModel or loadGraphModel with hub flag true.
-    const model = await tf.loadGraphModel('https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/model.json');
+    const args = process.argv.slice(2);
 
-    const zeros = tf.zeros([1, 224, 224, 3]);
+    if (args.length === 0) {
+        console.log('You need to pass model url as the first argument');
+        return 'fail';
+    }
+
+    const modelUrl = args[0];
+
+    // How to decide loadGraphModel or loadLayersModel or loadGraphModel with hub flag true.
+    const model = await tf.loadGraphModel(modelUrl);
+
+    const zeros = tf.zeros([1, 224, 224, 3], 'int32');
 
     // How to decide executeAsync or execute or predict.
     const result = await model.executeAsync(zeros);
