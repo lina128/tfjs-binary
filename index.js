@@ -1,5 +1,14 @@
 const tf = require('@tensorflow/tfjs');
 
+process.stdin.on('data', (data) => {
+    console.log(data.toString());
+});
+
+process.stdin.on('end', () => {
+    console.log('end');
+    main();
+})
+
 /**
  *   This script is used to load a saved model and perform inference.
  *   Run this script in console:
@@ -54,5 +63,3 @@ function parseModelType(modelType) {
 
     return modelType;
 }
-
-main();
